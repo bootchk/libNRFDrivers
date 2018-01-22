@@ -33,12 +33,23 @@ message(" Linker script is ${NRF5_LINKER_SCRIPT}")
 # source specified later
 add_library(NRFDrivers "")
 
+
+
 target_sources(
     NRFDrivers
     PUBLIC
        "${CMAKE_CURRENT_LIST_DIR}/lowFreqClockCoordinated.cpp"
        "${SDK_SOURCE_FILES}"
     )
+    
 
+# target is test harness
+add_executable(testNRFDrivers "")
+
+target_sources(
+    testNRFDrivers
+    PUBLIC
+       testNRFDrivers.cpp
+    )
 
 
