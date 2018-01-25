@@ -1,10 +1,8 @@
 cmake_minimum_required (VERSION 2.6)
 
-project (libNRFDrivers)
+project (libNRFDrivers C CXX)
 
-# cmake includes modules from here
-# !!! only for simple names without the .cmake suffix
-set(CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/CMakeScripts/")
+set(CMAKE_MODULE_PATH "/home/bootch/git/nRF5Cmake/")
 message(" Module path is ${CMAKE_MODULE_PATH}")
 
 
@@ -14,14 +12,24 @@ include("CMakeEnv")
 
 
 
-# var configures CMake_nRF5x to chip family nrf52
+# configure nRF5CMak scripts
 set(NRF_TARGET "nrf52")
+set(NRF_SOFTDEVICE "s132")
+
 
 # scripts specific to nRF5x building
-# Defines cmake macros prefixed with "nRF5x"
+# Defines cmake macros prefixed with "nRF5"
 # Sets many cmake vars for tool flags
-include("CMake_nRF5x")
-nRF5x_setup()
+include("nRF5")
+
+
+nRF5CheckSetupPreconditions()
+nRF5SetBuildOptions()
+nRF5SetIncludePaths()
+
+# we don't need to define SDK_SOURCES since we list the SDK sources ourselves
+# nRF5SetSDKSourcesBasic()
+
 
 # sanity: sets a var
 message(" Linker script is ${NRF5_LINKER_SCRIPT}")
@@ -29,21 +37,23 @@ message(" Linker script is ${NRF5_LINKER_SCRIPT}")
 
 
 
-# target is library
+# library
 # source specified later
 add_library(NRFDrivers "")
 
 
-
+# sources are only the facades and the drivers
+# Not: "${SDK_SOURCE_FILES}"
 target_sources(
     NRFDrivers
     PUBLIC
        "${CMAKE_CURRENT_LIST_DIR}/lowFreqClockCoordinated.cpp"
-       "${SDK_SOURCE_FILES}"
+       "${NRF5_SDK_PATH}/components/drivers_nrf/common/nrf_drv_common.c"
+       "${NRF5_SDK_PATH}/components/drivers_nrf/clock/nrf_drv_clock.c"
     )
     
 
-# target is test harness
+# test harness
 add_executable(testNRFDrivers "")
 
 target_sources(
