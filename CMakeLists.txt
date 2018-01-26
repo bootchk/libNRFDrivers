@@ -48,6 +48,7 @@ target_sources(
     NRFDrivers
     PUBLIC
        "${CMAKE_CURRENT_LIST_DIR}/lowFreqClockCoordinated.cpp"
+       "${CMAKE_CURRENT_LIST_DIR}/nvicCoordinated.cpp"
        "${NRF5_SDK_PATH}/components/drivers_nrf/common/nrf_drv_common.c"
        "${NRF5_SDK_PATH}/components/drivers_nrf/clock/nrf_drv_clock.c"
     )
