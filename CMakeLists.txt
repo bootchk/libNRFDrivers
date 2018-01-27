@@ -43,7 +43,12 @@ add_library(NRFDrivers "")
 
 
 # sources are only the facades and the drivers
+# there is no drive for the nvic: just separate .h implementation
 # Not: "${SDK_SOURCE_FILES}"
+# Dependency:  
+#   drv_clock -> drv_common.c
+#   drv_clock -> sdh.c (nrf_sdh_is_enabled())
+#   nrf_sdh.c -> nrf_section_iter.c
 target_sources(
     NRFDrivers
     PUBLIC
@@ -51,6 +56,8 @@ target_sources(
        "${CMAKE_CURRENT_LIST_DIR}/nvicCoordinated.cpp"
        "${NRF5_SDK_PATH}/components/drivers_nrf/common/nrf_drv_common.c"
        "${NRF5_SDK_PATH}/components/drivers_nrf/clock/nrf_drv_clock.c"
+       "${NRF5_SDK_PATH}/components/softdevice/common/nrf_sdh.c"
+       "${NRF5_SDK_PATH}/components/libraries/experimental_section_vars/nrf_section_iter.c"
     )
     
 

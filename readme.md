@@ -27,17 +27,21 @@ The facade API's are the same as for nRF5x (which uses the HAL and is not SD com
 
 The reason the LF clock needs coordination is to keep it on when SD is disabled.
 The SD would shut it off unless we coordinate.
+
 The HF clock does not need coordination (can use HAL) because we don't don't need it to stay on,
 and we do sequential multiprotocol so we don't access the HF clock when the SD is enabled
 and thus the SD's protection of the HF clock registers is disabled then
 and the HAL API will work without memory faults.
+
+Ditto for the nvic: we are sequential: we don't access the nvic while SD is enabled.
 
 Sources
 -
 
 Library compiles objects from sources from Nordic SDK v14.2 :
 
-    nrf_drv_<foo>.c 
+    nrf_drv_clock.c
+    nrf_sdh.c
 
 Sources in this project:
 
