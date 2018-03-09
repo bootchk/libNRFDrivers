@@ -12,9 +12,12 @@ include("CMakeEnv")
 
 
 
-# configure nRF5CMak scripts
-set(NRF_TARGET "nrf52")
-set(NRF_SOFTDEVICE "s132")
+# configure nRF5CMake scripts
+set(NRF_FAMILY "nrf52")
+
+
+set(SOFTDEVICE "s112")
+set(CHIP "nrf52810")
 
 
 # scripts specific to nRF5x building
@@ -41,6 +44,9 @@ message(" Linker script is ${NRF5_LINKER_SCRIPT}")
 # source specified later
 add_library(NRFDrivers "")
 
+nRF5SetSoftdeviceIncludePaths( "NRFDrivers" ${SOFTDEVICE})
+nRF5SetSoftdeviceDefinitions( "NRFDrivers" ${SOFTDEVICE})
+nRF5SetChipCompileDefinitions( "NRFDrivers" ${CHIP})
 
 # sources are only the facades and the drivers
 # there is no drive for the nvic: just separate .h implementation

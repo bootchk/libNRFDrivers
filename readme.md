@@ -74,6 +74,13 @@ mkdir Debug
 cmake -E chdir Debug/ cmake -G "Ninja" ../
 cmake --build "Debug" --target NRFDrivers
 
+OR
+
+mkdir Debug
+cmake -H. -B"Debug" -G "Ninja"
+cmake --build "Debug" --target NRFDrivers
+
+
 For now, Eclipse project is not configured correctly for building, you must use the command line.
 
 
