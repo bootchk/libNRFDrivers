@@ -16,8 +16,12 @@ include("CMakeEnv")
 set(NRF_FAMILY "nrf52")
 
 
-set(SOFTDEVICE "s112")
-set(CHIP "nrf52810")
+#set(SOFTDEVICE "s112")
+#set(CHIP "nrf52810")
+
+set(SOFTDEVICE "s132")
+set(CHIP "nrf52832")
+set(FLOAT_ABI "soft")
 
 
 # scripts specific to nRF5x building
