@@ -11,19 +11,6 @@ message(" Module path is ${CMAKE_MODULE_PATH}")
 include("CMakeEnv")
 
 
-
-# configure nRF5CMake scripts
-set(NRF_FAMILY "nrf52")
-
-
-#set(SOFTDEVICE "s112")
-#set(CHIP "nrf52810")
-
-set(SOFTDEVICE "s132")
-set(CHIP "nrf52832")
-set(FLOAT_ABI "soft")
-
-
 # scripts specific to nRF5x building
 # Defines cmake macros prefixed with "nRF5"
 # Sets many cmake vars for tool flags
@@ -38,19 +25,19 @@ nRF5SetIncludePaths()
 # nRF5SetSDKSourcesBasic()
 
 
-# sanity: sets a var
-message(" Linker script is ${NRF5_LINKER_SCRIPT}")
-
-
-
-
 # library
 # source specified later
 add_library(NRFDrivers "")
 
-nRF5SetSoftdeviceIncludePaths( "NRFDrivers" ${SOFTDEVICE})
-nRF5SetSoftdeviceDefinitions( "NRFDrivers" ${SOFTDEVICE})
-nRF5SetChipCompileDefinitions( "NRFDrivers" ${CHIP})
+set_target_properties( NRFDrivers
+    PROPERTIES
+       CHIP "nrf52810e"
+       SOFTDEVICE "s112"
+       FLOAT_ABI "soft"
+    )
+nRF5CheckTargetProperties(NRFDrivers)
+nRF5ConfigTargetByProperties(NRFDrivers)
+
 
 # sources are only the facades and the drivers
 # there is no drive for the nvic: just separate .h implementation
@@ -73,6 +60,17 @@ target_sources(
 
 # test harness
 add_executable(testNRFDrivers "")
+
+set_target_properties( testNRFDrivers
+    PROPERTIES
+       CHIP "nrf52810e"
+       SOFTDEVICE "s112"
+       FLOAT_ABI "soft"
+    )
+nRF5CheckTargetProperties(testNRFDrivers)
+nRF5ConfigTargetByProperties(testNRFDrivers)
+nRF5SetTargetStartupSources(testNRFDrivers)
+# TODO need fix this nRF5SetTargetsLinkerScript(testNRFDrivers "${CMAKE_SOURCE_DIR}/linkerScripts/nrf52810SD.ld")
 
 target_sources(
     testNRFDrivers
