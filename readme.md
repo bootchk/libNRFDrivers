@@ -3,8 +3,13 @@ libNRFDrivers
 
 C++ facade to certain Nordics nrf_drv_<foo> modules.
 
-Modules are compatible with Nordic Softdevice (SD.)
+"Modules" are compatible with Nordic Softdevice (SD.)
 (The alternative --use the HAL-- is not compatible with SD.)
+
+"Coordinated" means:
+
+     - compatible with SD
+     - and/or shares resources (GPIO pins) 
 
 SD compatibility strategies
 -
@@ -16,6 +21,7 @@ This library implements:
 
      LF clock (oscillator)
      nvic: SD compatible driver (sic)
+     comparator: 
      
 Other peripherals that must use drivers since they are shared with the SD:
      
@@ -41,6 +47,7 @@ Sources
 Library compiles objects from sources from Nordic SDK v14.2 :
 
     nrf_drv_clock.c
+    nrf_drv_comp.c
     nrf_sdh.c
 
 Sources in this project:
@@ -65,20 +72,22 @@ Always builds target "all"
 
 Seems messed up between Neon and Oxygen Eclipse versions
 
+Adding a module
+-
+
+    Add project source files (.cpp and .h)
+    Add Nordic SDK files to CMakeLists (.c)
+    Change sdk_config to enable a module
+
 Build
 -
 
 Command line build:
 
-mkdir Debug
-cmake -E chdir Debug/ cmake -G "Ninja" ../
-cmake --build "Debug" --target NRFDrivers
-
-OR
-
-mkdir Debug
-cmake -H. -B"Debug" -G "Ninja"
-cmake --build "Debug" --target NRFDrivers
+    mkdir cmakeBuild
+    cd cmakeBuild
+    cmake -G "Ninja" -DCMAKE_TOOLCHAIN_FILE=/home/bootch/git/nRF5Cmake/toolchain-gnu-arm.cmake ..
+    cmake --build . --target NRFDrivers
 
 
 For now, Eclipse project is not configured correctly for building, you must use the command line.
