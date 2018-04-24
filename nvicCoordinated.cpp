@@ -1,14 +1,7 @@
 
+#include "nvicCoordinated.h"
+
 #include <cassert>
-
-#include "nvic.h"
-
-
-/*
- * Two implementations:
- * - incompatible with SD, using NVIC_... API
- * - compatible with SD, using sd_nvic_... API
- */
 
 #include "hwConfig.h"
 
@@ -24,7 +17,7 @@
 
 
 
-void Nvic::enableRadioIRQ() {
+void NvicCoordinated::enableRadioIRQ() {
 	ret_code_t err_code;
 
 	err_code = sd_nvic_ClearPendingIRQ(RADIO_IRQn);
@@ -33,7 +26,7 @@ void Nvic::enableRadioIRQ() {
 	APP_ERROR_CHECK(err_code);
 }
 
-void Nvic::disableRadioIRQ() {
+void NvicCoordinated::disableRadioIRQ() {
 	ret_code_t err_code;
 
 	err_code = sd_nvic_ClearPendingIRQ(RADIO_IRQn);
@@ -43,7 +36,7 @@ void Nvic::disableRadioIRQ() {
 }
 
 
-void Nvic::enableLFTimerIRQ() {
+void NvicCoordinated::enableLFTimerIRQ() {
 	ret_code_t err_code;
 
 	err_code = sd_nvic_ClearPendingIRQ(LFTimerRTCIRQ);
@@ -58,7 +51,7 @@ void Nvic::enableLFTimerIRQ() {
 	APP_ERROR_CHECK(err_code);
 }
 
-void Nvic::disableLFTimerIRQ() {
+void NvicCoordinated::disableLFTimerIRQ() {
 	ret_code_t err_code;
 
 	err_code = sd_nvic_ClearPendingIRQ(LFTimerRTCIRQ);
@@ -67,14 +60,14 @@ void Nvic::disableLFTimerIRQ() {
 	APP_ERROR_CHECK(err_code);
 }
 
-void Nvic::pendLFTimerInterrupt() {
+void NvicCoordinated::pendLFTimerInterrupt() {
 	ret_code_t err_code;
 
 	err_code = sd_nvic_SetPendingIRQ(LFTimerRTCIRQ);
 	APP_ERROR_CHECK(err_code);
 }
 
-void Nvic::enablePowerClockIRQ(){
+void NvicCoordinated::enablePowerClockIRQ(){
 	ret_code_t err_code;
 
 	err_code = sd_nvic_ClearPendingIRQ(POWER_CLOCK_IRQn);
@@ -84,7 +77,7 @@ void Nvic::enablePowerClockIRQ(){
 	//assert(isEnabledPowerClockIRQ());
 }
 
-void Nvic::disablePowerClockIRQ(){
+void NvicCoordinated::disablePowerClockIRQ(){
 	ret_code_t err_code;
 
 	err_code = sd_nvic_ClearPendingIRQ(POWER_CLOCK_IRQn);
@@ -94,7 +87,7 @@ void Nvic::disablePowerClockIRQ(){
 }
 
 
-void Nvic::softResetSystem(){
+void NvicCoordinated::softResetSystem(){
 	ret_code_t err_code;
 
 	err_code = sd_nvic_SystemReset();

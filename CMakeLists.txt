@@ -1,6 +1,6 @@
 cmake_minimum_required (VERSION 2.6)
 
-project (libNRFDrivers C CXX)
+project (libNRFDrivers ASM C CXX)
 
 set(CMAKE_MODULE_PATH "/home/bootch/git/nRF5Cmake/")
 message(" Module path is ${CMAKE_MODULE_PATH}")

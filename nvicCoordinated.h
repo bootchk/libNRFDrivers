@@ -2,7 +2,7 @@
 #pragma once
 
 /*
- * Hides implementation.
+ * SD compatible driver for NVIC.
  * Two implementations: SD compatible and not.
  *
  * NVIC nested vectored interrupt controller.
@@ -13,7 +13,7 @@
  *
  * !!! Nvic is the class, NVIC is a Nordic macro
  */
-class Nvic {
+class NvicCoordinated {
 public:
 	// pair of methods for each IRQ
 
