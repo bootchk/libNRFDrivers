@@ -48,6 +48,13 @@ nRF5ConfigTargetByProperties(NRFDrivers)
 #   nrf_sdh.c -> nrf_section_iter.c
 
 
+list(APPEND SDKSources
+       "${NRF5_SDK_PATH}/components/drivers_nrf/common/nrf_drv_common.c"
+       "${NRF5_SDK_PATH}/components/drivers_nrf/clock/nrf_drv_clock.c"
+       "${NRF5_SDK_PATH}/components/drivers_nrf/comp/nrf_drv_comp.c"
+       "${NRF5_SDK_PATH}/components/softdevice/common/nrf_sdh.c"
+       "${NRF5_SDK_PATH}/components/libraries/experimental_section_vars/nrf_section_iter.c"
+       )
 
 target_sources(
     NRFDrivers
@@ -55,11 +62,7 @@ target_sources(
        "${CMAKE_CURRENT_LIST_DIR}/lowFreqClockCoordinated.cpp"
        "${CMAKE_CURRENT_LIST_DIR}/nvicCoordinated.cpp"
        "${CMAKE_CURRENT_LIST_DIR}/comparatorCoordinated.cpp"
-       "${NRF5_SDK_PATH}/components/drivers_nrf/common/nrf_drv_common.c"
-       "${NRF5_SDK_PATH}/components/drivers_nrf/clock/nrf_drv_clock.c"
-       "${NRF5_SDK_PATH}/components/drivers_nrf/comp/nrf_drv_comp.c"
-       "${NRF5_SDK_PATH}/components/softdevice/common/nrf_sdh.c"
-       "${NRF5_SDK_PATH}/components/libraries/experimental_section_vars/nrf_section_iter.c"
+       "${SDKSources}"
     )
     
 

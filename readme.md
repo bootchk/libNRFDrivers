@@ -39,7 +39,9 @@ and we do sequential multiprotocol so we don't access the HF clock when the SD i
 and thus the SD's protection of the HF clock registers is disabled then
 and the HAL API will work without memory faults.
 
-Ditto for the nvic: we are sequential: we don't access the nvic while SD is enabled.
+For the nvic: 
+when use case is sequential multiprotocol: use HAL/nvic and simply don't access the nvic while SD is enabled.
+when use case: concurrent multiprotocol: use NvicCoordinated 
 
 Sources
 -
@@ -49,12 +51,14 @@ Library compiles objects from sources from Nordic SDK v14.2 :
     nrf_drv_clock.c
     nrf_drv_comp.c
     nrf_sdh.c
+    (SDK file for NvicCoordinated is .../s132/headers/nrf_nvic.h i.e. inline code)
 
 Sources in this project:
 
     facade classes
          lowFreqClockCoordinated.cpp
          nvicCoordinated.cpp
+         comparatorCoordinated.cpp
          hwConfig.h (defines which RTC the nvic affects)
     sdk_config.h  (set to compile certain Nordic modules compatibly with SD)
     
